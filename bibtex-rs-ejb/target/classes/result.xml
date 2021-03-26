@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta name="generator" content=
+                "HTML Tidy for HTML5 for Linux version 5.2.0" />
+        <title>Bibtex</title>
+    </head>
+    <body>
+        @article{Бичурин2004, author={Бичурин М. И. and Петров В. М. and
+        Филиппов Д. А. and Сринивасан Г. and Лалетин В. М. },
+        title={Магнитоэлектрические композиционные материалы на основе
+        феррит- пьезоэлектриков в 3 т.}, year={2004}, language={russian},
+        address={СПБ}, edition={7-изд.}, journal={Journal},
+        publisher={Санкт-Петербургский политехнический университет Петра
+        Великого} }
+    </body>
+</html>
