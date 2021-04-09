@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 @ConcurrencyManagement(ConcurrencyManagementType.BEAN)
 @TransactionManagement(TransactionManagementType.BEAN)
 @Remote(BeanSchema.class)
-@EJB(name = "java:global/ruslan/recordSchema/bibtex", beanInterface = BeanSchema.class , beanName = "bibtex")
+@EJB(name = "java:global/ruslan/transformation/application_xml/application_x-bibtex", beanInterface = BeanSchema.class , beanName = "bibtex")
 public class BibtexRecordSchema  implements BeanSchema {
     private static final Logger log = Logger.getLogger(BibtexRecordSchema.class
             .getName());
@@ -51,10 +51,10 @@ public class BibtexRecordSchema  implements BeanSchema {
 
     @Override
     @NotNull
-    public String getTransformedRecord(Record record, String encoding) throws Exception {
+    public byte[] getTransformedRecord(byte[] record, String encoding) throws Exception {
         Document src = ruslanRecordSchema.toDocument(record, encoding);
         BibTexBuilder builder = getBuilder(src);
-        return builder.buildBibtex();
+        return builder.buildBibtex().getBytes(encoding);
 
     }
 

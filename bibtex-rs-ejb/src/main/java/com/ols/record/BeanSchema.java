@@ -9,6 +9,6 @@ public interface BeanSchema {
     String toString(Record record, String encoding) throws Exception;
     Record normalize(Record record, String encoding);
     Record denormalize(Record record, String encoding);
-    String getTransformedRecord(Record record, String encoding) throws Exception;
+    byte[] getTransformedRecord(byte[] record, String encoding) throws Exception;
     String getMimeType();
 }
