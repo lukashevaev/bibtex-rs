@@ -11,10 +11,8 @@ import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.logging.Logger;
 
 
@@ -49,34 +47,20 @@ public class BibtexRecordSchema  implements BeanSchema {
         }
     }
 
+
+
     @Override
     @NotNull
-    public Object getTransformedRecord(Record record, String encoding, String mediaType) throws Exception {
+    public String getTransformedRecord(Record record, String encoding) throws Exception {
         Document src = ruslanRecordSchema.toDocument(record, encoding);
-        if (!Arrays.asList(getSupportedMediaTypes()).contains(mediaType)) {
-            return Optional.empty();
-        } else {
-            if (mediaType.equals("text/html")) {
-                return transformSchemaToHtml(src);
-            } else return transformSchemaToText(src);
-        }
-    }
-
-    private String[] getSupportedMediaTypes() {
-        return new String[] {"text/html", "text/plain"};
-    }
-
-
-    //Метод трансформации из исходного xml в нужный формат(text/html)
-    private Document transformSchemaToHtml(Document src) throws TransformerException {
         BibTexBuilder builder = getBuilder(src);
-        return builder.buildHtml();
+        return builder.buildBibtex();
+
     }
 
-    //Метод трансформации из исходного xml в нужный формат(text/plain)
-    public String transformSchemaToText(Document src) throws TransformerException {
-        BibTexBuilder builder = getBuilder(src);
-        return builder.buildText();
+    @Override
+    public String getMimeType() {
+        return "application/x-bibtex";
     }
 
     private BibTexBuilder getBuilder(Document src) throws TransformerException {

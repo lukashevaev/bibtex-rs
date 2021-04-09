@@ -15,15 +15,14 @@ import java.lang.reflect.InvocationTargetException;
 
 public class Main {
     public static void main(String[] args) throws TransformerException, IOException, ParserConfigurationException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, NamingException, SAXException {
-        //preparing rusmarc.xml for reading
+        BibtexRecordSchema recordSchema = new BibtexRecordSchema();
+        recordSchema.init();
         InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("RUSMARC.xml");
-        //creating document for transformed(by xsl) rusmarc.xml
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
         Document document = null;
         if (inputStream != null) document = docBuilder.parse(inputStream);
-        BibtexRecordSchema bibtexRecordSchema = new BibtexRecordSchema();
-        BibtexRecordSchema.class.getDeclaredMethod("init", new Class[]{}).invoke(bibtexRecordSchema);
-        System.out.println(bibtexRecordSchema.transformSchemaToText(document));
+        //BibTexBuilder builder = recordSchema.getBuilder(document);
+        //System.out.println(builder.buildBibtex());
     }
 }

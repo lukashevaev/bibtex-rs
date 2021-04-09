@@ -1,13 +1,9 @@
 package com.ols.record;
 
-import org.jsoup.Jsoup;
-import org.jsoup.helper.W3CDom;
-import org.jsoup.nodes.Document;
-
 import java.util.Map;
 
 public class BibTexBuilder{
-    private final String recordType;
+    private String recordType;
     private final Map<String, String> fields;
 
     public BibTexBuilder(final Map<String, String> fields) {
@@ -24,6 +20,7 @@ public class BibTexBuilder{
     }
 
     private void refactorFields(){
+        this.recordType = this.recordType != null ? recordType : "Undefined";
         //these fields are not needed in bibtex(recordType will be on the top of bibtex-record, techreport is only a flag)
         fields.remove("recordType");
         fields.remove("techreport");
@@ -58,7 +55,7 @@ public class BibTexBuilder{
 
     }
 
-    public String buildText() {
+    public String buildBibtex() {
         StringBuilder bibTexText = new StringBuilder();
         bibTexText.append("@")
                     .append(recordType)
@@ -68,13 +65,13 @@ public class BibTexBuilder{
         fields.forEach((key, value) -> bibTexText.append("  ")
                 .append(key)
                 .append("={")
-                .append(value)
+                .append(value.trim())
                 .append("},\n"));
         //deleting "," from last body-line and adding a closing "}"
         return bibTexText.substring(0, bibTexText.length() - 2) + "\n" + '}';
     }
 
-    public org.w3c.dom.Document buildHtml() {
+    /*public org.w3c.dom.Document buildHtml() {
         Document document = Jsoup.parse("<!DOCTYPE html>");
         Document doc = Jsoup.parse("<html></html>");
         StringBuilder bibTexText = new StringBuilder();
@@ -98,7 +95,7 @@ public class BibTexBuilder{
         System.out.println(document);
         W3CDom w3cDom = new W3CDom();
         return w3cDom.fromJsoup(doc);
-    }
+    }*/
 
 
 }

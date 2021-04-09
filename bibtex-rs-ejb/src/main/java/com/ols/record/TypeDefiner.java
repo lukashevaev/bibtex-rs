@@ -25,7 +25,8 @@ public class TypeDefiner {
         boolean isChanged = false;
         //patternsLookup
         for (Map.Entry<RecordType,Pattern> entry : patternsForType.entrySet()) {
-                if (entry.getValue().matcher(recordType).find() || entry.getValue().matcher(fields.get("title").toLowerCase()).find()) {
+                if (entry.getValue().matcher(recordType).find() ||
+                        entry.getValue().matcher(fields.get("title").toLowerCase()).find()) {
                     recordType =  entry.getKey().toString();
                     isChanged = true;
                 }
