@@ -2,7 +2,6 @@ package com.ols.record;
 
 
 import com.ols.z3950.record.Record;
-import com.sun.istack.internal.NotNull;
 import org.w3c.dom.Document;
 
 import javax.annotation.PostConstruct;
@@ -50,7 +49,6 @@ public class BibtexRecordSchema  implements BeanSchema {
 
 
     @Override
-    @NotNull
     public byte[] getTransformedRecord(byte[] record, String encoding) throws Exception {
         Document src = ruslanRecordSchema.toDocument(record, encoding);
         BibTexBuilder builder = getBuilder(src);
