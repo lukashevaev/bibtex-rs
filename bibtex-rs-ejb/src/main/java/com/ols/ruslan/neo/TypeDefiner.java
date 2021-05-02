@@ -22,17 +22,17 @@ public class TypeDefiner {
             defineType();
         }
     }
-
+    // Метод, который определяет тип
     private void defineType(){
         boolean isChanged = false;
         String currentFoundRecordType = null;
-        //patternsLookup
+        //Поиск типа по паттернам
         for (Map.Entry<RecordType,Pattern> entry : patternsForType.entrySet()) {
                 if (entry.getValue().matcher(recordType).find() ||
                         entry.getValue().matcher(fields.get("title").toLowerCase()).find()) {
                     currentFoundRecordType = entry.getKey().toString();
-                    recordTypes.add(currentFoundRecordType);
-                    isChanged = true;
+                    recordType = currentFoundRecordType;
+                    return;
                 }
         }
 
@@ -45,17 +45,13 @@ public class TypeDefiner {
                 recordTypes.add(key.toString());
             }
         });
-
-        //Если тип, найденный по паттернам совпадает с типом, найденным по обязательынм полям, то этот тип сразу выводится
-        //Если нет, то выведется найденный по обязательным полям тип, но только если такой тип один
-        if (recordTypes.contains(currentFoundRecordType)) {
-            recordType = currentFoundRecordType;
-            return;
-        } else if (recordTypes.size() == 1){
+        // Если тип не нашелся по паттернам, то поиск по обязательным полям и отсутствию запрещенных
+        // Если по обязательным полям найдется один тип, то он выведется. А если больше одного, то поиск продолжается по особым случаям записи
+        if (recordTypes.size() == 1){
             recordType = recordTypes.iterator().next();
             return;
         } else {
-            //searchForSpecialCases
+            //searchForSpecialCases  ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ
             //checkForTechReport
             if (fields.get("techreport") != null) {
                 recordType = "techreport";
@@ -70,6 +66,7 @@ public class TypeDefiner {
                 }
                 if (!recordType.equals("article")) fields.remove("journal");
             }*/
+
             //check for @book
             String pages = fields.get("pages") != null ? fields.get("pages").toLowerCase() : "";
             if (PatternFactory.pagePattern.matcher(pages).find()
@@ -108,6 +105,7 @@ public class TypeDefiner {
                 "title",
                 "year"
         )));
+
 //        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
 //                "title",
 //                "year"

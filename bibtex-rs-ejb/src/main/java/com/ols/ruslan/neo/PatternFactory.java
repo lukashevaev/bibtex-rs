@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * This class is used to create patterns to find the required fields and to check them for the correct format.
+ * Данный класс используется для создания паттернов для того, чтобы найти тип записи, если указан явно, а также для того, чтобы найти случаи нетипичной записи полей
  */
 public class PatternFactory {
     private static final Map<RecordType, Pattern> patternsForType = new HashMap<>();
