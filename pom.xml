@@ -66,6 +66,12 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.ols.ruslan</groupId>
+                <artifactId>rneo-util</artifactId>
+                <version>1.9.1-SNAPSHOT</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

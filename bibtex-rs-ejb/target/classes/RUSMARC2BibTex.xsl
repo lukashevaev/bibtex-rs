@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0"
+<xsl:transform version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:exsl="http://exslt.org/common"
                 extension-element-prefixes="exsl">
@@ -10,7 +10,7 @@
                select="'Санкт-Петербургский политехнический университет Петра Великого'" />
 
     <xsl:template match='record'>
-        <file xmlns="http://bibtexml.sf.net/">
+        <file>
             <xsl:call-template name="personalCreatorName" />
             <xsl:value-of select="subfield[@id='p']"/>
             <entry id="value" >
@@ -262,15 +262,4 @@
             <xsl:text>) </xsl:text>
         </xsl:if>
     </xsl:template>
-
-
-    <!--
-    <xsl:template name="corporateCreator">
-        <xsl:value-of select="subfield[@id='a']" />
-        <xsl:for-each select="subfield[@id='b']">
-            <xsl:text>. </xsl:text>
-            <xsl:value-of select="." />
-        </xsl:for-each>
-    </xsl:template>
--->
-</xsl:stylesheet>
+</xsl:transform>

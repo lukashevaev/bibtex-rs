@@ -1,4 +1,4 @@
-package com.ols.record;
+package com.ols.ruslan.neo;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,10 +12,7 @@ public class PatternFactory {
 
     private PatternFactory(){
         patternsForType.put(RecordType.book,
-                        Pattern.compile("энциклопедия|encyclopaedia"));
-        patternsForType.put(RecordType.mvbook,
-                        Pattern.compile(
-                                "сборник|собрание|сочинения|работы|" +
+                        Pattern.compile("энциклопедия|encyclopaedia|сборник|собрание|сочинения|работы|" +
                                 "((в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?)$"));
         patternsForType.put(RecordType.proceedings,
                         Pattern.compile(
