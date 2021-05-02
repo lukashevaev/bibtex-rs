@@ -8,6 +8,7 @@ public class TypeDefiner {
     private String recordType;
     private final Map<RecordType, Pattern> patternsForType;
     private final Map<RecordType, Set<String>> requiredFields = new HashMap<>();
+    private final Map<RecordType, Set<String>> rejectedFields = new HashMap<>();
     private Set<String> recordTypes = new HashSet<>();
 
     public TypeDefiner(final Map<String, String> fields){
@@ -17,6 +18,7 @@ public class TypeDefiner {
         if (!fields.isEmpty()) {
             recordType = this.fields.get("recordType").toLowerCase();
             fillRequiredFields();
+            fillRejectedFields();
             defineType();
         }
     }
@@ -35,12 +37,17 @@ public class TypeDefiner {
         }
 
 
+        //Проверка на наличие у записи всех обязательных полей для какого-либо типа и проверка на отсутсвие запрещенных полей этого типа
+        //При удачной проверке тип запишется в recordTypes
         requiredFields.forEach((key, value) -> {
-            if (fields.keySet().containsAll(value)) {
+            if (fields.keySet().containsAll(value)
+                    && fields.keySet().stream().noneMatch(field -> rejectedFields.get(key) != null && rejectedFields.get(key).contains(field))) {
                 recordTypes.add(key.toString());
             }
         });
 
+        //Если тип, найденный по паттернам совпадает с типом, найденным по обязательынм полям, то этот тип сразу выводится
+        //Если нет, то выведется найденный по обязательным полям тип, но только если такой тип один
         if (recordTypes.contains(currentFoundRecordType)) {
             recordType = currentFoundRecordType;
             return;
@@ -55,14 +62,14 @@ public class TypeDefiner {
                 return;
             }
 
-            //checkForArticle
+            /*//checkForArticle
             if (fields.get("journal") != null) {
                 if (patternsForType.get(RecordType.article).matcher(fields.get("journal").toLowerCase()).find()) {
                     recordType = "article";
                     return;
                 }
                 if (!recordType.equals("article")) fields.remove("journal");
-            }
+            }*/
             //check for @book
             String pages = fields.get("pages") != null ? fields.get("pages").toLowerCase() : "";
             if (PatternFactory.pagePattern.matcher(pages).find()
@@ -83,12 +90,40 @@ public class TypeDefiner {
             if (!isChanged) recordType = "misc";
     }
 
+    //Обязательные поля для каждого типа
     private void fillRequiredFields() {
         requiredFields.put(RecordType.book, new HashSet<>(Arrays.asList(
                 "author",
                 "title",
                 "year",
                 "publisher"
+        )));
+        requiredFields.put(RecordType.article, new HashSet<>(Arrays.asList(
+                "author",
+                "title",
+                "journal",
+                "year"
+        )));
+        requiredFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
+                "title",
+                "year"
+        )));
+        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
+                "title",
+                "year"
+        )));
+    }
+
+    //Запрещенные поля для каждого типа
+    private void fillRejectedFields() {
+        rejectedFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
+                "author"
+        )));
+        rejectedFields.put(RecordType.book, new HashSet<>(Arrays.asList(
+                "journal"
+        )));
+        rejectedFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
+                "author"
         )));
     }
 
