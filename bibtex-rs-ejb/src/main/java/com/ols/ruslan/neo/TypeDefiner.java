@@ -3,6 +3,10 @@ package com.ols.ruslan.neo;
 import java.util.*;
 import java.util.regex.Pattern;
 
+/**
+ * Данный класс используется для того, чтобы определить тип записи на основании паттернов
+ * и на основании обязательнх полей
+ */
 public class TypeDefiner {
     private String recordType;
     private final Map<RecordType, Pattern> patternsForType;
@@ -53,17 +57,17 @@ public class TypeDefiner {
         } else {
             //searchForSpecialCases  ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ
 
-            //check for @book
+            // Проверка @book: есть общее количество страниц, не 12-25
             String pages = instance.getPages();
             if (PatternFactory.pagePattern.matcher(pages).find()
                     & !PatternFactory.pagesPattern.matcher(pages).find()) {
                 recordType = "book";
                 //return;
             }
-
+            // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
             if (recordType.equals("book") & PatternFactory.pagesPattern.matcher(pages).find()) recordType = "inbook";
 
-            //checkForProceedings
+            //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
             if (recordType.equals("proceedings")) {
                 if (PatternFactory.pagesPattern.matcher(instance.getPages()).find()) recordType = "inproceedings";
             }

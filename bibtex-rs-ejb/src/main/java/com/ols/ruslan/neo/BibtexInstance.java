@@ -2,6 +2,9 @@ package com.ols.ruslan.neo;
 
 import java.util.Map;
 
+/**
+ * Данный класс хранит в себе поля и дает к ним доступ
+ */
 public class BibtexInstance {
     private Map<String, String> fields;
 

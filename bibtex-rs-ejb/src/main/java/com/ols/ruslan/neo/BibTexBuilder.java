@@ -17,33 +17,35 @@ public class BibTexBuilder{
         this.recordType = typeDefiner.getRecordType();
         refactorFields();
     }
-
+    // Имя библиографичксой записи формата Bibtex
+    // (указывается до перечисления полей, записываем в форме AuthorYear)
     private String getBibtexKey() {
         if (!instance.getFields().isEmpty())
             return instance.getAuthor().split(" ")[0] + instance.getYear();
         else return "EmptyRecord";
     }
-
+    // Изменение полей
     private void refactorFields(){
         this.recordType = this.recordType != null ? recordType : "Undefined";
-        //these fields are not needed in bibtex(recordType will be on the top of bibtex-record, techreport is only a flag)
+        // Удаляем поля
+        // RecordType записывается отдельно в самом начале
+        // Techreport: если есть это поле- однозначно определяется тип, если его нет- удаляется
         instance.deleteRecordType();
         instance.deleteTechreport();
 
-        //deleting "and" in the end of field "author"
+        // Удаление "and" в конце поля "author"
             String author = instance.getAuthor();
             if (!StringUtil.isBlank(author)) instance.setAuthor(author.substring(0, author.length() - 4));
 
-        //change "rus" to "russian" if exists
+        // Заменяем "rus" на "russian" (по правилам данного формата)
             if (instance.getLanguage().equals("rus"))
                 instance.setLanguage("russian");
-        //check that volume matches a specific pattern (if exists)
+        // Удаляем поле том, если оно не удовлетворяет паттерну
             if (!PatternFactory.volumePattern.matcher(instance.getVolume().toLowerCase()).find()) instance.deleteVolume();
-        //check that number of journal matches a specific pattern (if exists)
-
-            if (!"@article".equals(recordType)) instance.setNumber("");
-
-
+        // Если не статья, то удаляем номер
+        if (!"@article".equals(recordType)) instance.setNumber("");
+        // Если тип записи статья,  но номер журнала не подходит под паттерн-
+        // удаляем его. В противном случае удаляем номер тома
         if ("@article".equals(recordType)) {
             if (!PatternFactory.numberPattern.matcher(instance.getNumber().toLowerCase()).find()) instance.deleteNumber();
             else instance.deleteVolume();
@@ -71,7 +73,7 @@ public class BibTexBuilder{
                 .append("={")
                 .append(value.trim())
                 .append("},\n"));
-        //deleting "," from last body-line and adding a closing "}"
+        // Удаляем "," с последней строки  и добавляем закрывающую "}"
         return bibTexText.substring(0, bibTexText.length() - 2) + "\n" + '}';
     }
 
