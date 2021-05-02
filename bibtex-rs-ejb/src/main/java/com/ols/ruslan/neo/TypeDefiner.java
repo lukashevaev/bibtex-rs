@@ -108,10 +108,10 @@ public class TypeDefiner {
                 "title",
                 "year"
         )));
-        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
-                "title",
-                "year"
-        )));
+//        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
+//                "title",
+//                "year"
+//        )));
     }
 
     //Запрещенные поля для каждого типа
