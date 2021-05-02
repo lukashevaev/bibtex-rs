@@ -4,19 +4,19 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 public class TypeDefiner {
-    private final Map<String, String> fields;
     private String recordType;
     private final Map<RecordType, Pattern> patternsForType;
     private final Map<RecordType, Set<String>> requiredFields = new HashMap<>();
     private final Map<RecordType, Set<String>> rejectedFields = new HashMap<>();
     private Set<String> recordTypes = new HashSet<>();
+    private final BibtexInstance instance;
 
-    public TypeDefiner(final Map<String, String> fields){
+    public TypeDefiner(BibtexInstance instance){
         PatternFactory patternFactory = PatternFactory.getInstance();
         patternsForType = patternFactory.getPatternsForType();
-        this.fields = fields;
-        if (!fields.isEmpty()) {
-            recordType = this.fields.get("recordType").toLowerCase();
+        this.instance = instance;
+        if (!instance.getFields().isEmpty()) {
+            recordType = instance.getRecordType().toLowerCase();
             fillRequiredFields();
             fillRejectedFields();
             defineType();
@@ -25,11 +25,11 @@ public class TypeDefiner {
     // Метод, который определяет тип
     private void defineType(){
         boolean isChanged = false;
-        String currentFoundRecordType = null;
+        String currentFoundRecordType;
         //Поиск типа по паттернам
         for (Map.Entry<RecordType,Pattern> entry : patternsForType.entrySet()) {
                 if (entry.getValue().matcher(recordType).find() ||
-                        entry.getValue().matcher(fields.get("title").toLowerCase()).find()) {
+                        entry.getValue().matcher(instance.getTitle().toLowerCase()).find()) {
                     currentFoundRecordType = entry.getKey().toString();
                     recordType = currentFoundRecordType;
                     return;
@@ -40,8 +40,8 @@ public class TypeDefiner {
         //Проверка на наличие у записи всех обязательных полей для какого-либо типа и проверка на отсутсвие запрещенных полей этого типа
         //При удачной проверке тип запишется в recordTypes
         requiredFields.forEach((key, value) -> {
-            if (fields.keySet().containsAll(value)
-                    && fields.keySet().stream().noneMatch(field -> rejectedFields.get(key) != null && rejectedFields.get(key).contains(field))) {
+            if (instance.getFields().keySet().containsAll(value)
+                    && instance.getFields().keySet().stream().noneMatch(field -> rejectedFields.get(key) != null && rejectedFields.get(key).contains(field))) {
                 recordTypes.add(key.toString());
             }
         });
@@ -52,23 +52,9 @@ public class TypeDefiner {
             return;
         } else {
             //searchForSpecialCases  ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ
-            //checkForTechReport
-            if (fields.get("techreport") != null) {
-                recordType = "techreport";
-                return;
-            }
-
-            /*//checkForArticle
-            if (fields.get("journal") != null) {
-                if (patternsForType.get(RecordType.article).matcher(fields.get("journal").toLowerCase()).find()) {
-                    recordType = "article";
-                    return;
-                }
-                if (!recordType.equals("article")) fields.remove("journal");
-            }*/
 
             //check for @book
-            String pages = fields.get("pages") != null ? fields.get("pages").toLowerCase() : "";
+            String pages = instance.getPages();
             if (PatternFactory.pagePattern.matcher(pages).find()
                     & !PatternFactory.pagesPattern.matcher(pages).find()) {
                 recordType = "book";
@@ -79,12 +65,10 @@ public class TypeDefiner {
 
             //checkForProceedings
             if (recordType.equals("proceedings")) {
-                if (fields.get("pages") != null) {
-                    if (PatternFactory.pagesPattern.matcher(fields.get("pages")).find()) recordType = "inproceedings";
-                }
+                if (PatternFactory.pagesPattern.matcher(instance.getPages()).find()) recordType = "inproceedings";
             }
         }
-            if (!isChanged) recordType = "misc";
+        if (!isChanged) recordType = "misc";
     }
 
     //Обязательные поля для каждого типа
