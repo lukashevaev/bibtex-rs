@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Данный класс используется для того, чтобы определить тип записи на основании паттернов
- * и на основании обязательнх полей
+ * и на основании обязательных полей
  */
 public class TypeDefiner {
     private String recordType;
