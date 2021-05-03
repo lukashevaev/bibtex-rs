@@ -19,9 +19,9 @@ public class PatternFactory {
         patternsForType.put(RecordType.proceedings,
                         Pattern.compile(
                                 "proceedings|" +
-                                "of\\s*(a|the)\\s*conference|" +
+                                "of\\s*(a|the)\\s*conference|конференци" +
                                         "conference|proceedings\\s*of|" +
-                                        "of\\s*(a|the).*\\s*colloquium|" +
+                                        "of\\s*(a|the).*\\s*colloquium|колоквиум" +
                                         "of\\s*symposia|symposium|" +
                                         "of\\s*(a|the)\\s*congress"));
         patternsForType.put(RecordType.article,

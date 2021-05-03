@@ -1,7 +1,6 @@
-package com.ols.record;
+package com.ols.ruslan.neo;
 
 
-import com.ols.ruslan.neo.XmlToBibtexTransformer;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
