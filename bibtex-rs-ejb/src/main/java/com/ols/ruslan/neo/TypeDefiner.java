@@ -40,7 +40,6 @@ public class TypeDefiner {
                 }
         }
 
-
         //Проверка на наличие у записи всех обязательных полей для какого-либо типа и проверка на отсутсвие запрещенных полей этого типа
         //При удачной проверке тип запишется в recordTypes
         requiredFields.forEach((key, value) -> {
@@ -55,22 +54,28 @@ public class TypeDefiner {
             recordType = recordTypes.iterator().next();
             return;
         } else {
-            //searchForSpecialCases  ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ ДОДЕЛАТЬ
+            //searchForSpecialCases
 
             // Проверка @book: есть общее количество страниц, не 12-25
             String pages = instance.getPages();
             if (PatternFactory.pagePattern.matcher(pages).find()
-                    & !PatternFactory.pagesPattern.matcher(pages).find()) {
+                    && !PatternFactory.pagesPattern.matcher(pages).find()) {
                 recordType = "book";
-                //return;
+                return;
             }
             // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
-            if (recordType.equals("book") & PatternFactory.pagesPattern.matcher(pages).find()) recordType = "inbook";
+            if (recordType.equals("book") && PatternFactory.pagesPattern.matcher(pages).find()) {
+                recordType = "inbook";
+                return;
+            }
 
             //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
-            if (recordType.equals("proceedings")) {
-                if (PatternFactory.pagesPattern.matcher(instance.getPages()).find()) recordType = "inproceedings";
+            if (recordType.equals("proceedings")
+                && PatternFactory.pagesPattern.matcher(instance.getPages()).find()) {
+                recordType = "inproceedings";
+                return;
             }
+
         }
         if (!isChanged) recordType = "misc";
     }

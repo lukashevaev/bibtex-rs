@@ -17,15 +17,15 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        XmlToBibtexTransformer toBibtexTransformer = new XmlToBibtexTransformer();
-        toBibtexTransformer.startup();
+        /*XmlToBibtexTransformer transformer = new XmlToBibtexTransformer();
+        transformer.startup();
         InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("RUSMARC.xml");
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
         Document document = null;
         if (inputStream != null) document = docBuilder.parse(inputStream);
         byte[] bytes = getBytes(document);
-        System.out.println(Arrays.toString(toBibtexTransformer.transform(bytes, "UTF-8")));
+        System.out.println(Arrays.toString(transformer.transform(bytes, "UTF-8")));*/
     }
 
     public static byte[] getBytes(Document document) throws Exception {

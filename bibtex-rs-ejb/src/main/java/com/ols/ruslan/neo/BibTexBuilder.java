@@ -34,19 +34,19 @@ public class BibTexBuilder{
         instance.deleteTechreport();
 
         // Удаление "and" в конце поля "author"
-            String author = instance.getAuthor();
-            if (!StringUtil.isBlank(author)) instance.setAuthor(author.substring(0, author.length() - 4));
+        String author = instance.getAuthor();
+        if (!StringUtil.isBlank(author)) instance.setAuthor(author.substring(0, author.length() - 4));
 
         // Заменяем "rus" на "russian" (по правилам данного формата)
-            if (instance.getLanguage().equals("rus"))
-                instance.setLanguage("russian");
+        if (instance.getLanguage().equals("rus"))
+            instance.setLanguage("russian");
         // Удаляем поле том, если оно не удовлетворяет паттерну
-            if (!PatternFactory.volumePattern.matcher(instance.getVolume().toLowerCase()).find()) instance.deleteVolume();
+        if (!PatternFactory.volumePattern.matcher(instance.getVolume().toLowerCase()).find()) instance.deleteVolume();
         // Если не статья, то удаляем номер
-        if (!"@article".equals(recordType)) instance.setNumber("");
+        if (!"article".equals(recordType)) instance.deleteNumber();
         // Если тип записи статья,  но номер журнала не подходит под паттерн-
         // удаляем его. В противном случае удаляем номер тома
-        if ("@article".equals(recordType)) {
+        if ("article".equals(recordType)) {
             if (!PatternFactory.numberPattern.matcher(instance.getNumber().toLowerCase()).find()) instance.deleteNumber();
             else instance.deleteVolume();
         }
