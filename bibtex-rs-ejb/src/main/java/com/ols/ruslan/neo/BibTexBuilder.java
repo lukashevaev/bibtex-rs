@@ -26,7 +26,7 @@ public class BibTexBuilder{
     }
     // Изменение полей
     private void refactorFields(){
-        this.recordType = this.recordType != null ? recordType : "Undefined";
+        this.recordType = this.recordType != null ? recordType : "misc";
         // Удаляем поля
         // RecordType записывается отдельно в самом начале
         // Techreport: если есть это поле- однозначно определяется тип, если его нет- удаляется

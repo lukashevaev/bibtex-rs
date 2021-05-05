@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class PatternFactory {
     private static final Map<RecordType, Pattern> patternsForType = new HashMap<>();
 
-    private PatternFactory(){
+    public PatternFactory(){
         patternsForType.put(RecordType.book,
                         Pattern.compile("энциклопедия|encyclopa[e]?dia|сборник|собрание|сочинения|работы|книга|" +
                                 "((в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?)$")); // Пример: сборник в 3 томах

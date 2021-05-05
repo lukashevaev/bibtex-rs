@@ -16,7 +16,7 @@ public class TypeDefiner {
     private final BibtexInstance instance;
 
     public TypeDefiner(BibtexInstance instance){
-        PatternFactory patternFactory = PatternFactory.getInstance();
+        PatternFactory patternFactory = new PatternFactory();
         patternsForType = patternFactory.getPatternsForType();
         this.instance = instance;
         if (!instance.getFields().isEmpty()) {
@@ -94,10 +94,10 @@ public class TypeDefiner {
                 "journal",
                 "year"
         )));
-        requiredFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
+        /*requiredFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
                 "title",
                 "year"
-        )));
+        )));*/
 
 //        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
 //                "title",
