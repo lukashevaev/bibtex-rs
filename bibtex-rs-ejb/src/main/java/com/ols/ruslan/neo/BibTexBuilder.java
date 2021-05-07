@@ -51,7 +51,7 @@ public class BibTexBuilder{
             else instance.deleteVolume();
         }
         String pages = instance.getPages();
-        if (!"@book".equals(recordType) & PatternFactory.pagePattern.matcher(pages).find()) instance.deletePages();
+        if (!"book".equals(recordType) & PatternFactory.pagePattern.matcher(pages).find()) instance.deletePages();
 
     }
 

@@ -10,6 +10,10 @@ public class BibtexInstance {
 
     public BibtexInstance(Map<String, String> fields) {
         this.fields = fields;
+        if (!"".equals(getJournal())) {
+            fields.put("journal", getJournal());
+        }
+        fields.remove("journal_description");
     }
 
     public Map<String, String> getFields() {
@@ -109,7 +113,12 @@ public class BibtexInstance {
     }
 
     public String getJournal() {
-        return fields.get("journal") != null ? fields.get("journal") : "";
+        StringBuilder journal = new StringBuilder();
+        if (fields.get("journal") != null) journal.append(fields.get("journal"));
+        if (fields.get("journal_description") != null && PatternFactory.journalPattern.matcher(fields.get("journal_description").toLowerCase()).find()) {
+            journal.append(", ").append(fields.get("journal_description"));
+        }
+        return journal.toString();
     }
 
     public void setJournal(String journal) {
@@ -200,9 +209,13 @@ public class BibtexInstance {
         this.fields.remove("techreport");
     }
 
+    public String getTitleChapter() {
+        return fields.get("title_chapter") != null ? fields.get("title_chapter") : "";
+    }
 
-
-
+    public void setTitleChapter(String title_chapter) {
+        this.fields.put("title_chapter", title_chapter);
+    }
 
 
 }

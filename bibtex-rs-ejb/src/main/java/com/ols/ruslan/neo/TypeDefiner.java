@@ -94,15 +94,6 @@ public class TypeDefiner {
                 "journal",
                 "year"
         )));
-        /*requiredFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
-                "title",
-                "year"
-        )));*/
-
-//        requiredFields.put(RecordType.techreport, new HashSet<>(Arrays.asList(
-//                "title",
-//                "year"
-//        )));
     }
 
     //Запрещенные поля для каждого типа
@@ -112,9 +103,6 @@ public class TypeDefiner {
         )));
         rejectedFields.put(RecordType.book, new HashSet<>(Arrays.asList(
                 "journal"
-        )));
-        rejectedFields.put(RecordType.proceedings, new HashSet<>(Arrays.asList(
-                "author"
         )));
     }
 

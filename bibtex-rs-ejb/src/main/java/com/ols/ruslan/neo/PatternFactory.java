@@ -15,7 +15,7 @@ public class PatternFactory {
     public PatternFactory(){
         patternsForType.put(RecordType.book,
                         Pattern.compile("энциклопедия|encyclopa[e]?dia|сборник|собрание|сочинения|работы|книга|" +
-                                "((в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?)$")); // Пример: сборник в 3 томах
+                                "(в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?$")); // Пример: сборник в 3 томах
         patternsForType.put(RecordType.proceedings,
                         Pattern.compile(
                                 "proceedings|" +
@@ -69,6 +69,9 @@ public class PatternFactory {
      * Например "10 стр", "345 pages"
      */
     public static final Pattern pagePattern = Pattern.compile("\\d*\\s*(pages|[pсc]|стр|страниц)\\.?");
+
+
+    public static final Pattern journalPattern = Pattern.compile("журнал|journal");
 
     public Map<RecordType, Pattern> getPatternsForType() {
         return patternsForType;
