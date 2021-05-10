@@ -10,9 +10,9 @@ public class BibtexInstance {
 
     public BibtexInstance(Map<String, String> fields) {
         this.fields = fields;
-        if (!"".equals(getJournal())) {
-            fields.put("journal", getJournal());
-        }
+        setTitle(getTitle());
+        setJournal(getJournal());
+        if ("".equals(getJournal())) deleteJournal();
         fields.remove("journal_description");
     }
 
@@ -65,7 +65,11 @@ public class BibtexInstance {
     }
 
     public String getTitle() {
-        return fields.get("title") != null ? fields.get("title") : "";
+        StringBuilder builder = new StringBuilder();
+        String recordType = fields.get("recordType");
+        if (fields.get("title") != null) builder.append(fields.get("title"));
+        if (recordType != null && PatternFactory.notEmptyFieldPattern.matcher(recordType).find()) builder.append(": ").append(recordType);
+        return builder.toString();
     }
 
     public void setTitle(String title) {
@@ -112,9 +116,15 @@ public class BibtexInstance {
         this.fields.put("edition", edition);
     }
 
+    public String getEditor() { return fields.get("editor") != null ? fields.get("editor") : ""; }
+
+    public void setEditor(String editor) {
+        this.fields.put("editor", editor);
+    }
+
     public String getJournal() {
         StringBuilder journal = new StringBuilder();
-        if (fields.get("journal") != null) journal.append(fields.get("journal"));
+        if (fields.get("journal") != null && !fields.get("journal").equals("")) journal.append(fields.get("journal"));
         if (fields.get("journal_description") != null && PatternFactory.journalPattern.matcher(fields.get("journal_description").toLowerCase()).find()) {
             journal.append(", ").append(fields.get("journal_description"));
         }
@@ -122,6 +132,7 @@ public class BibtexInstance {
     }
 
     public void setJournal(String journal) {
+        if (fields.get("journal") == null) return;
         this.fields.put("journal", journal);
     }
 
@@ -130,6 +141,7 @@ public class BibtexInstance {
     }
 
     public void setNumber(String number) {
+        if (fields.get("number") == null) return;
         this.fields.put("number", number);
     }
 
@@ -138,6 +150,7 @@ public class BibtexInstance {
     }
 
     public void setPages(String pages) {
+        if (fields.get("pages") == null) return;
         this.fields.put("pages", pages);
     }
 
@@ -146,6 +159,7 @@ public class BibtexInstance {
     }
 
     public void setVolume(String volume) {
+        if (fields.get("volume") == null) return;
         this.fields.put("volume", volume);
     }
 

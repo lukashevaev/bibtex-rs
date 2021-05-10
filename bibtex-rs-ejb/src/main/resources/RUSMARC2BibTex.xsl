@@ -96,6 +96,17 @@
                     </xsl:for-each>
                 </title>
 
+                <editor>
+                    <xsl:choose>
+                        <xsl:when
+                                test="field[@id='200']/subfield[@id='f']">
+                            <xsl:value-of
+                                    select="field[@id='200']/subfield[@id='f']">
+                            </xsl:value-of>
+                        </xsl:when>
+                    </xsl:choose>
+                </editor>
+
                 <year>
                     <xsl:choose>
                         <xsl:when test="field[@id='210']/subfield[@id='d']">
@@ -206,8 +217,8 @@
 
                 <publisher>
                     <xsl:choose>
-                        <xsl:when test="field[@id='210']/subfield[@id='a' or @id='c' or @id='g']">
-                            <xsl:value-of select="field[@id='210']/subfield[@id='a' or @id='c' or @id='g'][1]" />
+                        <xsl:when test="field[@id='210']/subfield[@id='c' or @id='g']">
+                            <xsl:value-of select="field[@id='210']/subfield[@id='c' or @id='g'][1]" />
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:choose>
@@ -225,6 +236,9 @@
                                         test="field[@id='463']/subfield[@id='1']/field[@id='210']/subfield[@id='c' or @id='g']">
                                     <xsl:value-of
                                             select="field[@id='463']/subfield[@id='1']/field[@id='210']/subfield[@id='c' or @id='g'][1]" />
+                                </xsl:when>
+                                <xsl:when test="field[@id='210']/subfield[@id='a']">
+                                    <xsl:value-of select="field[@id='210']/subfield[@id='a'][1]" />
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:value-of select="$default.publisher" />

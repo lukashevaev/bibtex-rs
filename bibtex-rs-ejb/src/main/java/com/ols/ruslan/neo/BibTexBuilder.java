@@ -9,12 +9,12 @@ import java.util.stream.Collectors;
 
 public class BibTexBuilder{
     private String recordType;
-    BibtexInstance instance;
+    private final BibtexInstance instance;
 
     public BibTexBuilder(final Map<String, String> fields) {
         instance = new BibtexInstance(fields);
         TypeDefiner typeDefiner = new TypeDefiner(instance);
-        this.recordType = typeDefiner.getRecordType();
+        this.recordType = typeDefiner.defineType();
         refactorFields();
     }
     // Имя библиографичксой записи формата Bibtex
@@ -53,15 +53,16 @@ public class BibTexBuilder{
         String pages = instance.getPages();
         if (!"book".equals(recordType) & PatternFactory.pagePattern.matcher(pages).find()) instance.deletePages();
 
-    }
-
-    public String buildBibtex() {
+        //Удаляем пустые поля
         instance.setFields(
                 instance.getFields()
                         .entrySet()
                         .stream()
-                        .filter(entry -> entry.getValue() != null && !entry.getValue().equals(""))
+                        .filter(entry -> entry.getValue() != null && !entry.getValue().equals("") && PatternFactory.notEmptyFieldPattern.matcher(entry.getValue()).find())
                         .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue , (a, b) -> a, LinkedHashMap::new)));
+    }
+
+    public String buildBibtex() {
         StringBuilder bibTexText = new StringBuilder();
         bibTexText.append("@")
                     .append(recordType)

@@ -8,35 +8,27 @@ import java.util.regex.Pattern;
  * и на основании обязательных полей
  */
 public class TypeDefiner {
-    private String recordType;
-    private final Map<RecordType, Pattern> patternsForType;
     private final Map<RecordType, Set<String>> requiredFields = new HashMap<>();
     private final Map<RecordType, Set<String>> rejectedFields = new HashMap<>();
-    private Set<String> recordTypes = new HashSet<>();
     private final BibtexInstance instance;
 
     public TypeDefiner(BibtexInstance instance){
-        PatternFactory patternFactory = new PatternFactory();
-        patternsForType = patternFactory.getPatternsForType();
         this.instance = instance;
-        if (!instance.getFields().isEmpty()) {
-            recordType = instance.getRecordType().toLowerCase();
-            fillRequiredFields();
-            fillRejectedFields();
-            defineType();
-        }
     }
     // Метод, который определяет тип
-    private void defineType(){
-        boolean isChanged = false;
-        String currentFoundRecordType;
+    public String defineType(){
+        Set<String> recordTypes = new HashSet<>();
+        Map<RecordType, Pattern> typePatterns = new PatternFactory().getTypePatterns();
+        String foundRecordType = instance.getRecordType().toLowerCase();
+        fillRequiredFields();
+        fillRejectedFields();
+
+
         //Поиск типа по паттернам
-        for (Map.Entry<RecordType,Pattern> entry : patternsForType.entrySet()) {
-                if (entry.getValue().matcher(recordType).find() ||
+        for (Map.Entry<RecordType,Pattern> entry : typePatterns.entrySet()) {
+                if (entry.getValue().matcher(foundRecordType).find() ||
                         entry.getValue().matcher(instance.getTitle().toLowerCase()).find()) {
-                    currentFoundRecordType = entry.getKey().toString();
-                    recordType = currentFoundRecordType;
-                    return;
+                    return defineWithSpecialCases(entry.getKey().toString());
                 }
         }
 
@@ -48,36 +40,34 @@ public class TypeDefiner {
                 recordTypes.add(key.toString());
             }
         });
-        // Если тип не нашелся по паттернам, то поиск по обязательным полям и отсутствию запрещенных
+
+        // Если тип не нашелся по паттернам, то сразу выводится выше.
         // Если по обязательным полям найдется один тип, то он выведется. А если больше одного, то поиск продолжается по особым случаям записи
         if (recordTypes.size() == 1){
-            recordType = recordTypes.iterator().next();
-            return;
+            return recordTypes.iterator().next();
         } else {
-            //searchForSpecialCases
-
             // Проверка @book: есть общее количество страниц, не 12-25
             String pages = instance.getPages();
             if (PatternFactory.pagePattern.matcher(pages).find()
                     && !PatternFactory.pagesPattern.matcher(pages).find()) {
-                recordType = "book";
-                return;
+                return "book";
             }
-            // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
-            if (recordType.equals("book") && PatternFactory.pagesPattern.matcher(pages).find()) {
-                recordType = "inbook";
-                return;
-            }
-
-            //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
-            if (recordType.equals("proceedings")
-                && PatternFactory.pagesPattern.matcher(instance.getPages()).find()) {
-                recordType = "inproceedings";
-                return;
-            }
-
         }
-        if (!isChanged) recordType = "misc";
+        return  "misc";
+    }
+
+    private String defineWithSpecialCases(String type) {
+        String pages = instance.getPages();
+        // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
+        if (type.equals("book") && PatternFactory.pagesPattern.matcher(pages).find()) {
+            return "inbook";
+        }
+        //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
+        if (type.equals("proceedings")
+                && PatternFactory.pagesPattern.matcher(instance.getPages()).find()) {
+            return "inproceedings";
+        }
+        return type;
     }
 
     //Обязательные поля для каждого типа
@@ -104,9 +94,5 @@ public class TypeDefiner {
         rejectedFields.put(RecordType.book, new HashSet<>(Arrays.asList(
                 "journal"
         )));
-    }
-
-    public String getRecordType(){
-        return recordType;
     }
 }

@@ -10,38 +10,38 @@ import java.util.regex.Pattern;
  * чтобы найти случаи нетипичной записи полей.
  */
 public class PatternFactory {
-    private static final Map<RecordType, Pattern> patternsForType = new HashMap<>();
+    private static final Map<RecordType, Pattern> typePatterns = new HashMap<>();
 
     public PatternFactory(){
-        patternsForType.put(RecordType.book,
-                        Pattern.compile("энциклопедия|encyclopa[e]?dia|сборник|собрание|сочинения|работы|книга|" +
-                                "(в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?$")); // Пример: сборник в 3 томах
-        patternsForType.put(RecordType.proceedings,
-                        Pattern.compile(
-                                "proceedings|" +
+        fillTypePatterns();
+    }
+
+    private void fillTypePatterns() {
+        typePatterns.put(RecordType.book,
+                Pattern.compile("энциклопедия|encyclopa[e]?dia|сборник|собрание|сочинения|работы|книга|словарь|" +
+                        "(в|in)\\s\\d+-?х?\\s(т|ч|vols)\\.?$")); // Пример: сборник в 3 томах
+        typePatterns.put(RecordType.proceedings,
+                Pattern.compile(
+                        "proceedings|" +
                                 "of\\s*(a|the)\\s*conference|конференци" +
-                                        "conference|proceedings\\s*of|" +
-                                        "of\\s*(a|the).*\\s*colloquium|колоквиум" +
-                                        "of\\s*symposia|symposium|" +
-                                        "of\\s*(a|the)\\s*congress"));
-        patternsForType.put(RecordType.article,
-                        Pattern.compile("журнал|journal|статья|article"));
-        patternsForType.put(RecordType.mastersthesis,
-                        Pattern.compile(
-                                "дис.*маг|выпускная квалификационная работа магистра|" +
+                                "conference|proceedings\\s*of|" +
+                                "of\\s*(a|the).*\\s*colloquium|колоквиум" +
+                                "of\\s*symposia|symposium|" +
+                                "of\\s*(a|the)\\s*congress"));
+        typePatterns.put(RecordType.article,
+                Pattern.compile("журнал|journal|статья|article"));
+        typePatterns.put(RecordType.mastersthesis,
+                Pattern.compile(
+                        "дис.*маг|выпускная квалификационная работа магистра|" +
                                 "(master(s)?)?\\s*thesis\\s*((of)?\\smaster)?"));
-        patternsForType.put(RecordType.phdthesis,
-                        Pattern.compile("дис.*канд|выпускная квалификационная работа бакалавра"));
-        patternsForType.put(RecordType.techreport,
-                        Pattern.compile("technical report|отчет|доклад"));
+        typePatterns.put(RecordType.phdthesis,
+                Pattern.compile("дис.*канд|выпускная квалификационная работа бакалавра"));
+        typePatterns.put(RecordType.techreport,
+                Pattern.compile("technical report|отчет|доклад"));
     }
 
-    private static class PatternFactoryHolder {
-        private static final PatternFactory instance = new PatternFactory();
-    }
-
-    public static PatternFactory getInstance(){
-        return PatternFactoryHolder.instance;
+    public Map<RecordType, Pattern> getTypePatterns() {
+        return typePatterns;
     }
 
     /** Для поля "pages"
@@ -73,8 +73,8 @@ public class PatternFactory {
 
     public static final Pattern journalPattern = Pattern.compile("журнал|journal");
 
-    public Map<RecordType, Pattern> getPatternsForType() {
-        return patternsForType;
-    }
+
+    public static final Pattern notEmptyFieldPattern = Pattern.compile("[a-zA-Zа-яА-Я0-9]");
+
 
 }
