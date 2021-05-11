@@ -35,7 +35,8 @@ public class BibTexBuilder{
 
         // Удаление "and" в конце поля "author"
         String author = instance.getAuthor();
-        if (!StringUtil.isBlank(author)) instance.setAuthor(author.substring(0, author.length() - 4));
+        String[] authors = author.split("and");
+        if (authors.length > 1) instance.setAuthor(author.substring(0, author.length() - 4));
 
         // Заменяем "rus" на "russian" (по правилам данного формата)
         if (instance.getLanguage().equals("rus"))
