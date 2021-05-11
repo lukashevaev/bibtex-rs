@@ -160,6 +160,9 @@
 
                 <address>
                     <xsl:choose>
+                            <xsl:when test="field[@id='210']/subfield[@id='a']">
+                                <xsl:value-of select="field[@id='210']/subfield[@id='a']" />
+                            </xsl:when>
                             <xsl:when test="field[@id='461' or @id = '463']/subfield[@id='1']/field[@id='210']/subfield[@id='b']">
                                 <xsl:value-of select="field[@id='461' or @id = '463']/subfield[@id='1']/field[@id='210']/subfield[@id='b']" />
                             </xsl:when>
@@ -237,9 +240,9 @@
                                     <xsl:value-of
                                             select="field[@id='463']/subfield[@id='1']/field[@id='210']/subfield[@id='c' or @id='g'][1]" />
                                 </xsl:when>
-                                <xsl:when test="field[@id='210']/subfield[@id='a']">
-                                    <xsl:value-of select="field[@id='210']/subfield[@id='a'][1]" />
-                                </xsl:when>
+<!--                                <xsl:when test="field[@id='210']/subfield[@id='a']">-->
+<!--                                    <xsl:value-of select="field[@id='210']/subfield[@id='a'][1]" />-->
+<!--                                </xsl:when>-->
                                 <xsl:otherwise>
                                     <xsl:value-of select="$default.publisher" />
                                 </xsl:otherwise>
