@@ -16,8 +16,8 @@ public class TypeDefiner {
         this.instance = instance;
     }
     // Метод, который определяет тип
-    public String defineType(){
-        Set<String> recordTypes = new HashSet<>();
+    public RecordType defineType(){
+        Set<RecordType> recordTypes = new HashSet<>();
         Map<RecordType, Pattern> typePatterns = new PatternFactory().getTypePatterns();
         String foundRecordType = instance.getRecordType().toLowerCase();
         fillRequiredFields();
@@ -28,7 +28,7 @@ public class TypeDefiner {
         for (Map.Entry<RecordType,Pattern> entry : typePatterns.entrySet()) {
                 if (entry.getValue().matcher(foundRecordType).find() ||
                         entry.getValue().matcher(instance.getTitle().toLowerCase()).find()) {
-                    return defineWithSpecialCases(entry.getKey().toString());
+                    return defineWithSpecialCases(entry.getKey());
                 }
         }
 
@@ -37,7 +37,7 @@ public class TypeDefiner {
         requiredFields.forEach((key, value) -> {
             if (instance.getFields().keySet().containsAll(value)
                     && instance.getFields().keySet().stream().noneMatch(field -> rejectedFields.get(key) != null && rejectedFields.get(key).contains(field))) {
-                recordTypes.add(key.toString());
+                recordTypes.add(key);
             }
         });
 
@@ -50,22 +50,23 @@ public class TypeDefiner {
             String pages = instance.getPages();
             if (PatternFactory.pagePattern.matcher(pages).find()
                     && !PatternFactory.pagesPattern.matcher(pages).find()) {
-                return "book";
+                return RecordType.book;
             }
         }
-        return  "misc";
+        return  RecordType.misc;
     }
 
-    private String defineWithSpecialCases(String type) {
+    private RecordType defineWithSpecialCases(RecordType type) {
         String pages = instance.getPages();
         // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
-        if (type.equals("book") && PatternFactory.pagesPattern.matcher(pages).find()) {
-            return "inbook";
+        if (type.equals(RecordType.book)
+                && PatternFactory.pagesPattern.matcher(pages).find()) {
+            return RecordType.inbook;
         }
         //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
-        if (type.equals("proceedings")
+        if (type.equals(RecordType.proceedings)
                 && PatternFactory.pagesPattern.matcher(instance.getPages()).find()) {
-            return "inproceedings";
+            return RecordType.inproceedings;
         }
         return type;
     }

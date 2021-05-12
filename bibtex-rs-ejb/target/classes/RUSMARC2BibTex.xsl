@@ -269,6 +269,7 @@
 
     <xsl:template name="personalCreatorName">
         <xsl:value-of select="subfield[@id='a']" />
+        <!--<xsl:text>, </xsl:text>-->
         <xsl:if test="subfield[@id='d']">
             <xsl:text> </xsl:text>
             <xsl:value-of select="subfield[@id='d']" />

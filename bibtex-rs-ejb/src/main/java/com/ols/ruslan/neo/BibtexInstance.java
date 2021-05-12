@@ -1,12 +1,16 @@
 package com.ols.ruslan.neo;
 
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 /**
  * Данный класс хранит в себе поля и дает к ним доступ
  */
 public class BibtexInstance {
     private Map<String, String> fields;
+    private static final Logger log = Logger.getLogger(BibtexInstance.class
+            .getName());
 
     public BibtexInstance(Map<String, String> fields) {
         this.fields = fields;
@@ -25,6 +29,9 @@ public class BibtexInstance {
     }
 
     public String getRecordType() {
+
+
+
         return fields.get("recordType") != null ? fields.get("recordType") : "";
     }
 
@@ -230,7 +237,6 @@ public class BibtexInstance {
     public void setTitleChapter(String title_chapter) {
         this.fields.put("title_chapter", title_chapter);
     }
-
 
 }
 
