@@ -17,6 +17,11 @@ public class BibTexBuilder{
         this.recordType = typeDefiner.defineType();
         refactorFields();
     }
+
+    // Метод для выделения цифр из поля
+    public String getDigits(String field) {
+        return field.replaceAll("[^0-9]", "");
+    }
     // Имя библиографичксой записи формата Bibtex
     // (указывается до перечисления полей, записываем в форме AuthorYear)
     private String getBibtexKey() {
@@ -51,6 +56,8 @@ public class BibTexBuilder{
             if (!PatternFactory.numberPattern.matcher(instance.getNumber().toLowerCase()).find()) instance.deleteNumber();
             else instance.deleteVolume();
         }
+
+        instance.setPages(getDigits(instance.getPages()));
         String pages = instance.getPages();
         if (!"book".equals(recordType) & PatternFactory.pagePattern.matcher(pages).find()) instance.deletePages();
 

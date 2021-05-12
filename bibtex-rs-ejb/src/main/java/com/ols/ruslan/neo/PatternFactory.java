@@ -68,7 +68,7 @@ public class PatternFactory {
      * Если поле совпадает с паттерном "digits"
      * Например "10 стр", "345 pages"
      */
-    public static final Pattern pagePattern = Pattern.compile("\\d*\\s*(pages|[pсc]|стр|страниц)\\.?");
+    public static final Pattern pagePattern = Pattern.compile("\\d*");
 
 
     public static final Pattern journalPattern = Pattern.compile("журнал|journal");

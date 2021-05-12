@@ -19,7 +19,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         XmlToBibtexTransformer transformer = new XmlToBibtexTransformer();
         transformer.startup();
-        InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("file.xml");
+        InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("RUSMARC.xml");
         DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = builderFactory.newDocumentBuilder();
         Document document = null;
