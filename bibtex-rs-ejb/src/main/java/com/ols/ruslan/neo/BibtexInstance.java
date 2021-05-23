@@ -1,6 +1,8 @@
 package com.ols.ruslan.neo;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
@@ -20,6 +22,7 @@ public class BibtexInstance {
         fields.remove("journal_description");
     }
 
+
     public Map<String, String> getFields() {
         return fields;
     }
@@ -28,11 +31,8 @@ public class BibtexInstance {
         this.fields = fields;
     }
 
-    public String getRecordType() {
-
-
-
-        return fields.get("recordType") != null ? fields.get("recordType") : "";
+    public Optional<String> getRecordType() {
+        return Optional.ofNullable(fields.get("recordType"));
     }
 
     public void setRecordType(String recordType) {
@@ -47,16 +47,16 @@ public class BibtexInstance {
         this.fields.put("techreport", techreport);
     }
 
-    public String getAuthor() {
-        return fields.get("author") != null ? fields.get("author") : "";
+    public Optional<String> getAuthor() {
+        return Optional.ofNullable(fields.get("author"));
     }
 
     public void setAuthor(String author) {
         this.fields.put("author", author);
     }
 
-    public String getYear() {
-        return fields.get("year") != null ? fields.get("year") : "";
+    public Optional<String> getYear() {
+        return Optional.ofNullable(fields.get("year"));
     }
 
     public void setYear(String year) {
@@ -143,8 +143,8 @@ public class BibtexInstance {
         this.fields.put("journal", journal);
     }
 
-    public String getNumber() {
-        return fields.get("number") != null ? fields.get("number") : "";
+    public Optional<String> getNumber() {
+        return Optional.ofNullable(fields.get("number"));
     }
 
     public void setNumber(String number) {
@@ -152,8 +152,8 @@ public class BibtexInstance {
         this.fields.put("number", number);
     }
 
-    public String getPages() {
-        return fields.get("pages") != null ? fields.get("pages") : "";
+    public Optional<String> getPages() {
+        return Optional.ofNullable(fields.get("author"));
     }
 
     public void setPages(String pages) {
@@ -161,8 +161,8 @@ public class BibtexInstance {
         this.fields.put("pages", pages);
     }
 
-    public String getVolume() {
-        return fields.get("volume") != null ? fields.get("volume") : "";
+    public Optional<String> getVolume() {
+        return Optional.ofNullable(fields.get("volume"));
     }
 
     public void setVolume(String volume) {

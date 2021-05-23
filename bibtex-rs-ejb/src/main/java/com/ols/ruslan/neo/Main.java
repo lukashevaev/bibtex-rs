@@ -1,6 +1,7 @@
 package com.ols.ruslan.neo;
 
 
+
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,12 +12,21 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
+
 
 public class Main {
     public static void main(String[] args) throws Exception {
+
+
+        //System.out.println(test2());
+
         XmlToBibtexTransformer transformer = new XmlToBibtexTransformer();
         transformer.startup();
         InputStream inputStream = Main.class.getClassLoader().getResourceAsStream("file.xml");
@@ -37,4 +47,7 @@ public class Main {
         transformer.transform(source, result);
         return out.toByteArray();
     }
+
+
+
 }

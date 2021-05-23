@@ -17,9 +17,9 @@ public class TypeDefiner {
     }
     // Метод, который определяет тип
     public RecordType defineType(){
-        Set<RecordType> recordTypes = new HashSet<>();
+        SortedSet<RecordType> recordTypes = new TreeSet<>();
         Map<RecordType, Pattern> typePatterns = new PatternFactory().getTypePatterns();
-        String foundRecordType = instance.getRecordType().toLowerCase();
+        String foundRecordType = instance.getRecordType().orElse("");
         fillRequiredFields();
         fillRejectedFields();
 
@@ -47,17 +47,20 @@ public class TypeDefiner {
             return recordTypes.iterator().next();
         } else {
             // Проверка @book: есть общее количество страниц, не 12-25
-            String pages = instance.getPages();
+            String pages = instance.getPages().orElse("");
             if (PatternFactory.pagePattern.matcher(pages).find()
                     && !PatternFactory.pagesPattern.matcher(pages).find()) {
                 return RecordType.book;
+            }
+            if (recordTypes.size() > 1) {
+                return recordTypes.first();
             }
         }
         return  RecordType.misc;
     }
 
     private RecordType defineWithSpecialCases(RecordType type) {
-        String pages = instance.getPages();
+        String pages = instance.getPages().orElse("");
         // Если удовлетворяет паттерну "digits-digits" и подходит под @book, то это @inbook
         if (type.equals(RecordType.book)
                 && PatternFactory.pagesPattern.matcher(pages).find()) {
@@ -65,7 +68,7 @@ public class TypeDefiner {
         }
         //Если удовлетворяет паттерну "digits-digits" и подходит под @proceedings, то это @inproceedings
         if (type.equals(RecordType.proceedings)
-                && PatternFactory.pagesPattern.matcher(instance.getPages()).find()) {
+                && PatternFactory.pagesPattern.matcher(instance.getPages().orElse("")).find()) {
             return RecordType.inproceedings;
         }
         return type;

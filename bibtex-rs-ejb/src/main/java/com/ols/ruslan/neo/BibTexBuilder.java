@@ -2,9 +2,7 @@ package com.ols.ruslan.neo;
 
 
 import java.lang.reflect.Array;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BibTexBuilder {
@@ -27,16 +25,47 @@ public class BibTexBuilder {
     // Имя библиографичксой записи формата Bibtex
     // (указывается до перечисления полей, записываем в форме AuthorYear)
     private String getBibtexKey() {
-        return String.format("%s%s",
-                !instance.getAuthor().equals("")
-                        ? Transliterator.cyr2lat(instance.getAuthor().split(" ")[0].replaceAll("[^a-zA-Zа-яА-Я]", ""))
-                        : "Undefined",
-                !instance.getYear().equals("")
-                        ? instance.getYear()
-                        : "Unknown");
+
+        String author = instance.getAuthor().isPresent()
+                ? Transliterator.cyr2lat(instance.getAuthor().get().split(" ")[0].replaceAll("[^a-zA-Zа-яА-Я]", ""))
+                : "Undefined";
+
+        String year = instance.getYear().orElse("Unknown");
+
+        String title = instance.getTitle();
+
+        String firstTitle;
+
+        if (title != null) {
+            String firstWord = getFirstWordOfString(title);
+            if (PatternFactory.notEmptyFieldPattern.matcher(firstWord).find()) {
+                firstTitle = Transliterator.cyr2lat(firstWord);
+            } else {
+                firstTitle = "";
+            }
+        } else {
+            firstTitle = "";
+        }
+
+        return String.format("%s%s%s",
+                author, year, firstTitle);
     }
+
+    private String getFirstWordOfString(String source) {
+        if (source.contains(" ")) {
+            return source.split(" ")[0];
+        } else {
+            return source;
+        }
+    }
+
+
     // Изменение полей
     private void refactorFields(){
+
+        instance.setEditor(instance.getEditor().replaceAll(",", " and "));
+
+
         this.recordType = this.recordType != null ? recordType : RecordType.misc;
         // Удаляем поля
         // RecordType записывается отдельно в самом начале
@@ -45,23 +74,24 @@ public class BibTexBuilder {
         instance.deleteTechreport();
 
         // Удаление "and" в конце поля "author"
-        String author = instance.getAuthor();
-        String[] allAuthors = author.split("and");
-        StringBuilder builder = new StringBuilder();
-        Arrays.stream(allAuthors).forEach(fullName -> {
-            String[] authors = fullName.trim().split(" ");
-            String name = authors[0] + ", ";
-            builder.append(name);
-            Arrays.stream(authors).skip(1).forEach(str -> builder.append(str).append(" "));
-            builder.append(" and ");
+        instance.getAuthor().ifPresent(author -> {
+            String[] allAuthors = author.split("_");
+            StringBuilder builder = new StringBuilder();
+            Arrays.stream(allAuthors).forEach(fullName -> {
+                String[] authors = fullName.trim().split(" ");
+                String name = authors[0] + ", ";
+                builder.append(name);
+                Arrays.stream(authors).skip(1).forEach(str -> builder.append(str).append(" "));
+                builder.append(" and ");
+            });
+            if (allAuthors.length == 1) {
+                instance.setAuthor(builder.toString().replaceAll("and", ""));
+            } else {
+                builder.delete(builder.lastIndexOf("and") - 3, builder.length());
+                instance.setAuthor(builder.toString().trim());
+            }
         });
 
-        if (allAuthors.length == 1) {
-            instance.setAuthor(builder.toString().replaceAll("and", ""));
-        } else {
-            builder.delete(builder.lastIndexOf("and") - 3, builder.length());
-            instance.setAuthor(builder.toString().trim().substring(0, builder.length() - 4));
-        }
 
 
         // Заменяем "rus" на "russian" (по правилам данного формата)
@@ -70,18 +100,18 @@ public class BibTexBuilder {
         if (instance.getLanguage().equals("eng"))
             instance.setLanguage("english");
         // Удаляем поле том, если оно не удовлетворяет паттерну
-        if (!PatternFactory.volumePattern.matcher(instance.getVolume().toLowerCase()).find()) instance.deleteVolume();
+        if (!PatternFactory.volumePattern.matcher(instance.getVolume().orElse("").toLowerCase()).find()) instance.deleteVolume();
         // Если не статья, то удаляем номер
         if (recordType.notEquals(RecordType.article)) instance.deleteNumber();
         // Если тип записи статья,  но номер журнала не подходит под паттерн-
         // удаляем его. В противном случае удаляем номер тома
         if (recordType.notEquals(RecordType.article)) {
-            if (!PatternFactory.numberPattern.matcher(instance.getNumber().toLowerCase()).find()) instance.deleteNumber();
+            if (!PatternFactory.numberPattern.matcher(instance.getNumber().orElse("").toLowerCase()).find()) instance.deleteNumber();
             else instance.deleteVolume();
         }
 
-        instance.setPages(getDigits(instance.getPages()));
-        String pages = instance.getPages();
+        instance.setPages(getDigits(instance.getPages().orElse("")));
+        String pages = instance.getPages().orElse("");
         if (recordType.notEquals(RecordType.book) & PatternFactory.pagePattern.matcher(pages).find()) instance.deletePages();
 
 

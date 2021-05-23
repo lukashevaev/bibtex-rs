@@ -1,6 +1,6 @@
-<record syntax="1.2.840.10003.5.28.1">
+<record syntax="rusmarc">
     <leader>
-        <length>01915</length>
+        <length>00780</length>
         <status>n</status>
         <type>a</type>
         <leader07>m</leader07>
@@ -8,90 +8,82 @@
         <leader09>a</leader09>
         <indicatorCount>2</indicatorCount>
         <identifierLength>2</identifierLength>
-        <dataBaseAddress>00229</dataBaseAddress>
-        <leader17> </leader17>
+        <dataBaseAddress>00241</dataBaseAddress>
+        <leader17>3</leader17>
         <leader18>i</leader18>
         <leader19> </leader19>
         <entryMap>450 </entryMap>
     </leader>
-    <field id="001">7</field>
-    <field id="005">20200130171120.2</field>
-    <field id="010">
-        <indicator id="1"> </indicator>
-        <indicator id="2"> </indicator>
-        <subfield id="a">5-7422-0188-5</subfield>
-    </field>
+    <field id="001">1</field>
+    <field id="005">20190822123749.9</field>
     <field id="100">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">20200130h2001 k y0rusy50 ca</subfield>
-    </field>
-    <field id="101">
-        <indicator id="1">0</indicator>
-        <indicator id="2"> </indicator>
-        <subfield id="a">rus</subfield>
-        <subfield id="a">fre</subfield>
-    </field>
-    <field id="102">
-        <indicator id="1"> </indicator>
-        <indicator id="2"> </indicator>
-        <subfield id="a">RU</subfield>
+        <subfield id="a">19991022d1969 k y1rusb01020304ca</subfield>
     </field>
     <field id="105">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">a j 000zy</subfield>
+        <subfield id="a">a j </subfield>
     </field>
     <field id="200">
         <indicator id="1">1</indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">Le Français accéléré</subfield>
-        <subfield id="e">Ускоренный курс французского языка (с фонограммой)</subfield>
-        <subfield id="f">В.П. Филимонова</subfield>
-        <subfield id="e">Учеб. пособие для школ, гимназий и колледжей с франц. яз. в качестве второго яз. и для самостоятельного изучения.</subfield>
+        <subfield id="a">Thermodynamics </subfield>
+        <subfield id="e">An introductory text for engineering students</subfield>
+    </field>
+    <field id="205">
+        <indicator id="1"> </indicator>
+        <indicator id="2"> </indicator>
+        <subfield id="a">2. ed</subfield>
     </field>
     <field id="210">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">Санкт-Петербург</subfield>
-        <subfield id="d">2001</subfield>
+        <subfield id="a">Reading et al.</subfield>
+        <subfield id="c">Addison-Wesley</subfield>
+        <subfield id="d">1969</subfield>
     </field>
     <field id="215">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">143 с.</subfield>
-        <subfield id="c">ил</subfield>
+        <subfield id="a">622p.</subfield>
     </field>
-    <field id="330">
+    <field id="606">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">Данное учебное пособие предназначено для учащихся и всех, кто начинает изучение французского языка. Учебник состоит из вводно-фонетической части, состоящей из 5 уроков (20 часов) и 5 разговорных тем, перед введением тематического материала вводится лексика и грамматический материал, затем даются лексико-грамматические упражнения Учебное пособие включает 5 разговорных тем, которые вводятся путем диалогической речи, что дает возможность усваивать французский разговорный язык.</subfield>
+        <subfield id="2">spstush</subfield>
+        <subfield id="3">RU\SPSTU\sub\1215</subfield>
+        <subfield id="a">Термодинамика</subfield>
     </field>
-    <field id="610">
-        <indicator id="1">1</indicator>
-        <indicator id="2"> </indicator>
-        <subfield id="a">французский язык</subfield>
-        <subfield id="a">учебные пособия </subfield>
-    </field>
-    <field id="686">
+    <field id="620">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="2">rubbk</subfield>
-        <subfield id="a">81.471.1-92</subfield>
+        <subfield id="d">Readingetal.</subfield>
+    </field>
+    <field id="675">
+        <indicator id="1"> </indicator>
+        <indicator id="2"> </indicator>
+        <subfield id="a">536.7</subfield>
     </field>
     <field id="700">
         <indicator id="1"> </indicator>
         <indicator id="2">1</indicator>
-        <subfield id="a">Филимонова</subfield>
-        <subfield id="b">В.П.</subfield>
-        <subfield id="g">Вера Павловна</subfield>
+        <subfield id="a">Lee</subfield>
+        <subfield id="b">J. F.</subfield>
+    </field>
+    <field id="701">
+        <indicator id="1"> </indicator>
+        <indicator id="2">1</indicator>
+        <subfield id="a">Sears</subfield>
+        <subfield id="b">F. W.</subfield>
     </field>
     <field id="801">
         <indicator id="1"> </indicator>
-        <indicator id="2">1</indicator>
+        <indicator id="2">0</indicator>
         <subfield id="a">RU</subfield>
         <subfield id="b">19013582</subfield>
-        <subfield id="c">20030123</subfield>
+        <subfield id="c">19991022</subfield>
         <subfield id="g">PSBO</subfield>
     </field>
     <field id="801">
@@ -99,12 +91,33 @@
         <indicator id="2">2</indicator>
         <subfield id="a">RU</subfield>
         <subfield id="b">19013582</subfield>
-        <subfield id="c">20030221</subfield>
+        <subfield id="c">20020415</subfield>
+        <subfield id="g">PSBO</subfield>
+    </field>
+    <field id="801">
+        <indicator id="1"> </indicator>
+        <indicator id="2">2</indicator>
+        <subfield id="a">RU</subfield>
+        <subfield id="b">19013582</subfield>
+        <subfield id="c">20071005</subfield>
         <subfield id="g">PSBO</subfield>
     </field>
     <field id="998">
         <indicator id="1"> </indicator>
         <indicator id="2"> </indicator>
-        <subfield id="a">lefracс0002001фили</subfield>
+        <subfield id="a">th0000radd1969lee0</subfield>
+    </field>
+    <field id="999">
+        <indicator id="1"> </indicator>
+        <indicator id="2"> </indicator>
+        <subfield id="a">19013582</subfield>
+        <subfield id="b">ОНЛ</subfield>
+        <subfield id="e">-1/19960131</subfield>
+        <subfield id="h">536.7</subfield>
+        <subfield id="i">L47</subfield>
+        <subfield id="p">2982892</subfield>
+        <subfield id="u">1,00</subfield>
+        <subfield id="v">1</subfield>
+        <subfield id="y">0000043347</subfield>
     </field>
 </record>
