@@ -1,0 +1,11 @@
+@article{Ivanov2004Informacionnaja,
+  author={Иванов, О. В.},
+  title={Информационная составляющая современных войн},
+  editor={О. В. Иванов},
+  year={2004},
+  language={russian},
+  journal={Вестник Московского университета, научный журнал},
+  number={4},
+  pages={64-70},
+  publisher={Изд-во Московского ун-та}
+}

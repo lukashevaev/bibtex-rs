@@ -1,7 +1,7 @@
 package com.ols.ruslan.neo;
 
 public class Transliterator {
-    public static String cyr2lat(char ch){
+    public static String cyr2lat(char ch) {
         switch (ch){
             case 'А': return "A";
             case 'Б': return "B";
@@ -73,9 +73,9 @@ public class Transliterator {
         }
     }
 
-    public static String cyr2lat(String s){
-        StringBuilder sb = new StringBuilder(s.length()*2);
-        for(char ch: s.toCharArray()){
+    public static String cyr2lat(String s) {
+        StringBuilder sb = new StringBuilder(s.length() * 2);
+        for (char ch: s.toCharArray()) {
             sb.append(cyr2lat(ch));
         }
         return sb.toString();

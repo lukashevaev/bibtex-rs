@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 public class PatternFactory {
     private static final Map<RecordType, Pattern> typePatterns = new HashMap<>();
 
-    public PatternFactory(){
+    public PatternFactory() {
         fillTypePatterns();
     }
 
@@ -70,9 +70,7 @@ public class PatternFactory {
      */
     public static final Pattern pagePattern = Pattern.compile("\\d+");
 
-
     public static final Pattern journalPattern = Pattern.compile("журнал|journal");
-
 
     public static final Pattern notEmptyFieldPattern = Pattern.compile("[a-zA-Zа-яА-Я0-9]");
 

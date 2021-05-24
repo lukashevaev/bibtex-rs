@@ -8,6 +8,7 @@ public class BibTexBuilder {
     private final BibtexInstance instance;
 
     public BibTexBuilder(final Map<String, String> fields) {
+
         instance = new BibtexInstance(fields);
         TypeDefiner typeDefiner = new TypeDefiner(instance);
         this.recordType = typeDefiner.defineType();
