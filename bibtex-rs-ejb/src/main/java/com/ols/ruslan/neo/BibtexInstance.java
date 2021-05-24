@@ -1,18 +1,13 @@
 package com.ols.ruslan.neo;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.logging.Logger;
 
 /**
  * Данный класс хранит в себе поля и дает к ним доступ
  */
 public class BibtexInstance {
     private Map<String, String> fields;
-    private static final Logger log = Logger.getLogger(BibtexInstance.class
-            .getName());
 
     public BibtexInstance(Map<String, String> fields) {
         this.fields = fields;
@@ -21,7 +16,6 @@ public class BibtexInstance {
         if ("".equals(getJournal())) deleteJournal();
         fields.remove("journal_description");
     }
-
 
     public Map<String, String> getFields() {
         return fields;
@@ -115,15 +109,17 @@ public class BibtexInstance {
         this.fields.put("address", address);
     }
 
-    public String getEdition() {
-        return fields.get("edition") != null ? fields.get("edition") : "";
+    public Optional<String> getEdition() {
+        return Optional.ofNullable(fields.get("number"));
     }
 
     public void setEdition(String edition) {
         this.fields.put("edition", edition);
     }
 
-    public String getEditor() { return fields.get("editor") != null ? fields.get("editor") : ""; }
+    public String getEditor() {
+        return fields.get("editor") != null ? fields.get("editor") : "";
+    }
 
     public void setEditor(String editor) {
         this.fields.put("editor", editor);
@@ -153,7 +149,7 @@ public class BibtexInstance {
     }
 
     public Optional<String> getPages() {
-        return Optional.ofNullable(fields.get("author"));
+        return Optional.ofNullable(fields.get("pages"));
     }
 
     public void setPages(String pages) {
@@ -234,8 +230,8 @@ public class BibtexInstance {
         return fields.get("title_chapter") != null ? fields.get("title_chapter") : "";
     }
 
-    public void setTitleChapter(String title_chapter) {
-        this.fields.put("title_chapter", title_chapter);
+    public void setTitleChapter(String titleChapter) {
+        this.fields.put("title_chapter", titleChapter);
     }
 
 }

@@ -1,7 +1,5 @@
 package com.ols.ruslan.neo;
 
-
-
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -13,19 +11,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Arrays;
 
 
 public class Main {
     public static void main(String[] args) throws Exception {
-
-
-        //System.out.println(test2());
 
         XmlToBibtexTransformer transformer = new XmlToBibtexTransformer();
         transformer.startup();
