@@ -1,0 +1,7 @@
+@misc{Undefined2020,
+  title={№ 12},
+  year={2020},
+  language={russian},
+  journal={Наука и жизнь, ежемесячный научно-популярный журнал},
+  publisher={Пресса}
+}

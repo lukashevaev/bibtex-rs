@@ -1,0 +1,10 @@
+@book{Lee1963Statistical,
+  author={Lee, J. F.  and Sears, F.W.  and Turcotte, D.L},
+  title={Statistical thermodynamics},
+  editor={J. F. Lee and  F.W. Sears and  D.L. Turcotte},
+  year={1963},
+  language={english},
+  address={Massachusetts},
+  pages={374},
+  publisher={Addison-Wesley}
+}

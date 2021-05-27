@@ -1,0 +1,9 @@
+@book{Lee1969Thermodynamics,
+  author={Lee, J. F.  and Sears, F. W},
+  title={Thermodynamics : An introductory text for engineering students},
+  year={1969},
+  address={Reading et al.},
+  edition={2. ed},
+  pages={622},
+  publisher={Addison-Wesley}
+}

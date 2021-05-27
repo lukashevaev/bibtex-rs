@@ -1,0 +1,10 @@
+@book{Demidovich1995Sbornik,
+  author={Демидович, Б. П.},
+  title={Сборник задач и упражнений по математическому анализу: Учеб. пособие для ун-тов и пед. вузов},
+  year={1995},
+  language={russian},
+  address={СПб.},
+  edition={12 изд. стер.},
+  pages={489},
+  publisher={Мифрил}
+}
